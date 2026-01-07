@@ -21,9 +21,26 @@ model Account {
   age Int?
   createdAt DateTime @default(now())
   updateddAt DateTime? @updatedAt
+
+
+
+  addresses Address[]
 }
 
 enum Gender {
   MALE
   FEMALE
+}
+
+model Address {
+  id String @id @default(uuid())
+  title String
+  phone String
+  addrees String
+  postalCode String
+  accountId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  account Account @relation(fields: [accountId],references: [id])
 }
