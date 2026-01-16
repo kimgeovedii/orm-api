@@ -19,12 +19,12 @@ model Account {
   email String @unique
   gender Gender
   age Int?
+  password String?
   createdAt DateTime @default(now())
   updateddAt DateTime? @updatedAt
 
-
-
-  addresses Address[]
+  address Address? //one-to-one
+  // addresses Address[] //one-to-many
 }
 
 enum Gender {
@@ -33,14 +33,14 @@ enum Gender {
 }
 
 model Address {
-  id String @id @default(uuid())
-  title String
-  phone String
-  addrees String
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title      String
+  phone      String
+  addrees    String   
   postalCode String
-  accountId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime? @updatedAt
+  accountId  Int      @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime? @updatedAt
 
-  account Account @relation(fields: [accountId],references: [id])
+  account    Account  @relation(fields: [accountId], references: [id])
 }
